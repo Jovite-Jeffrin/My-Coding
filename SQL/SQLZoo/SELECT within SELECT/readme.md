@@ -1,7 +1,6 @@
 ## SELECT within SELECT
 
-1.
-List each country name where the population is larger than that of 'Russia'.
+1. List each country name where the population is larger than that of 'Russia'.
 
 ```sql
 SELECT name FROM world
