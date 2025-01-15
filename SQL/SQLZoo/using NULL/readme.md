@@ -8,7 +8,7 @@ from teacher
 where dept is null
 ```
 
-2.Note the INNER JOIN misses the teachers with no department and the departments with no teacher.
+2. Note the INNER JOIN misses the teachers with no department and the departments with no teacher.
 
 ```sql
 SELECT teacher.name, dept.name
