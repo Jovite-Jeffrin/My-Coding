@@ -62,3 +62,38 @@ select
     FROM viewership
     where device_type IN ('tablet','phone')) as mobile_views
 ```
+
+### Average Post Hiatus (Part 1)
+Given a table of Facebook posts, for each user who posted at least twice in 2021, write a query to find the number of days between each user’s first post of the year and last post of the year in the year 2021. Output the user and number of the days between each user's first and last post.
+
+```sql
+select user_id, max(post_date::Date) - min(post_date::date) as days
+from posts
+where EXTRACT(year from post_date) = 2021
+GROUP by 1
+HAVING count(post_id) > 1
+```
+
+### Teams Power Users
+```sql
+SELECT sender_id, count(message_id) as cnt
+FROM messages
+WHERE EXTRACT(MONTH FROM sent_date) = 8 and EXTRACT(YEAR FROM sent_date) = 2022
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 2;
+```
+
+### Duplicate Job Listings
+Assume you're given a table containing job postings from various companies on the LinkedIn platform. Write a query to retrieve the count of companies that have posted duplicate job listings. Definition: Duplicate job listings are defined as two job listings within the same company that share identical titles and descriptions.
+
+```sql
+WITH cte AS (
+    SELECT company_id, title, description, count(job_id) as cnt 
+    FROM job_listings
+    GROUP BY company_id, title, description)
+
+SELECT count(company_id) as duplicate
+FROM cte
+where cnt > 1;
+```
