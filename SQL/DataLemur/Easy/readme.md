@@ -75,6 +75,8 @@ HAVING count(post_id) > 1
 ```
 
 ### Teams Power Users
+Write a query to identify the top 2 Power Users who sent the highest number of messages on Microsoft Teams in August 2022. Display the IDs of these 2 users along with the total number of messages they sent. Output the results in descending order based on the count of the messages. Assumption: No two users have sent the same number of messages in August 2022.
+
 ```sql
 SELECT sender_id, count(message_id) as cnt
 FROM messages
@@ -96,4 +98,63 @@ WITH cte AS (
 SELECT count(company_id) as duplicate
 FROM cte
 where cnt > 1;
+```
+
+### Cities With Completed Trades
+Assume you're given the tables containing completed trade orders and user details in a Robinhood trading system. Write a query to retrieve the top three cities that have the highest number of completed trade orders listed in descending order. Output the city name and the corresponding number of completed trade orders.
+
+```sql
+SELECT
+    u.city, count(t.status) as status
+FROM trades t
+JOIN users u on t.user_id = u.user_id
+WHERE t.status = 'Completed'
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT 3;
+```
+
+### Average Review Ratings
+Given the reviews table, write a query to retrieve the average star rating for each product, grouped by month. The output should display the month as a numerical value, product ID, and average star rating rounded to two decimal places. Sort the output first by month and then by product ID.
+
+```sql
+SELECT 
+  EXTRACT(MONTH from submit_date) as month_name,
+  product_id,  round(avg(stars),2) as avg_stars
+FROM reviews
+GROUP BY 1,2
+ORDER BY 1,2;
+```
+
+### Well Paid Employees
+Companies often perform salary analyses to ensure fair compensation practices. One useful analysis is to check if there are any employees earning more than their direct managers. As a HR Analyst, you're asked to identify all employees who earn more than their direct managers. The result should include the employee's ID and name.
+
+```sql
+SELECT
+    e.employee_id, e.name
+FROM employee e
+INNER JOIN employee m ON m.employee_id = e.manager_id
+where e.salary > m.salary;
+```
+
+### App Click-through Rate (CTR)
+Assume you have an events table on Facebook app analytics. Write a query to calculate the click-through rate (CTR) for the app in 2022 and round the results to 2 decimal places. Definition and note:
+* Percentage of click-through rate (CTR) = 100.0 * Number of clicks / Number of impressions
+* To avoid integer division, multiply the CTR by 100.0, not 100.
+
+```sql
+WITH cte as (
+SELECT 
+  app_id,
+  sum(CASE
+    WHEN event_type = 'impression' THEN 1 ELSE 0 END) AS impression,
+  sum(CASE
+    WHEN event_type = 'click' THEN 1 ELSE 0 END) AS clicks
+FROM events
+WHERE EXTRACT(YEAR FROM TIMESTAMP) = 2022
+GROUP BY 1)
+
+SELECT 
+  app_id, round((clicks::NUMERIC/impression::NUMERIC)*100.00 ,2) as ctr
+FROM cte;
 ```
