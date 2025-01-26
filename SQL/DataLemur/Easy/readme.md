@@ -158,3 +158,32 @@ SELECT
   app_id, round((clicks::NUMERIC/impression::NUMERIC)*100.00 ,2) as ctr
 FROM cte;
 ```
+
+### Second Day Confirmation
+Assume you're given tables with information about TikTok user sign-ups and confirmations through email and text. New users on TikTok sign up using their email addresses, and upon sign-up, each user receives a text message confirmation to activate their account. Write a query to display the user IDs of those who did not confirm their sign-up on the first day, but confirmed on the second day. Definition:
+* action_date refers to the date when users activated their accounts and confirmed their sign-up through text messages.
+
+Using window function:
+```sql
+WITH cte as (
+SELECT 
+  e.user_id, e.email_id, t.signup_action, 
+  ROW_NUMBER() OVER(PARTITION BY e.email_id ORDER BY t.action_date) as rn 
+FROM texts t 
+JOIN emails e on t.email_id = e.email_id)
+
+SELECT 
+  user_id
+FROM cte 
+WHERE rn = 2 and signup_action = 'Confirmed'
+```
+
+Using date function: 
+```sql
+SELECT 
+  e.user_id
+FROM emails e 
+JOIN texts t on e.email_id = t.email_id
+WHERE t.action_date = e.signup_date + INTERVAL '1 day' AND
+t.signup_action = 'Confirmed';
+```
