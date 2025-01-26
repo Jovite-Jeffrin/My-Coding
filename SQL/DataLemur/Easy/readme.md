@@ -187,3 +187,26 @@ JOIN texts t on e.email_id = t.email_id
 WHERE t.action_date = e.signup_date + INTERVAL '1 day' AND
 t.signup_action = 'Confirmed';
 ```
+
+### Cards Issued Difference
+Your team at JPMorgan Chase is preparing to launch a new credit card, and to gain some insights, you're analyzing how many credit cards were issued each month.
+
+Write a query that outputs the name of each credit card and the difference in the number of issued cards between the month with the highest issuance cards and the lowest issuance. Arrange the results based on the largest disparity.
+
+```sql
+SELECT
+  card_name, max(issued_amount) - min(issued_amount) as cnt
+FROM monthly_cards_issued
+GROUP BY 1
+ORDER BY 2 DESC;
+```
+
+### Compressed Mean
+You're trying to find the mean number of items per order on Alibaba, rounded to 1 decimal place using tables which includes information on the count of items in each order (item_count table) and the corresponding number of orders for each item count (order_occurrences table).
+
+```sql
+SELECT 
+  round(sum(item_count::DECIMAL * order_occurrences) / (sum(order_occurrences)),1) as mean
+FROM items_per_order;
+```
+
