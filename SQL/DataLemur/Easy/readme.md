@@ -210,3 +210,60 @@ SELECT
 FROM items_per_order;
 ```
 
+### Pharmacy Analytics (Part 1)
+CVS Health is trying to better understand its pharmacy sales, and how well different products are selling. Each drug can only be produced by one manufacturer.
+
+Write a query to find the top 3 most profitable drugs sold, and how much profit they made. Assume that there are no ties in the profits. Display the result from the highest to the lowest total profit.
+
+```sql
+SELECT
+  drug, sum(total_sales - cogs) as profit
+FROM pharmacy_sales
+GROUP BY 1
+ORDER  BY 2 DESC
+LIMIT 3;
+```
+
+### Pharmacy Analytics (Part 2)
+CVS Health is analyzing its pharmacy sales data, and how well different products are selling in the market. Each drug is exclusively manufactured by a single manufacturer. Write a query to identify the manufacturers associated with the drugs that resulted in losses for CVS Health and calculate the total amount of losses incurred.
+
+Output the manufacturer's name, the number of drugs associated with losses, and the total losses in absolute value. Display the results sorted in descending order with the highest losses displayed at the top.
+
+```sql
+SELECT
+  manufacturer, count(drug) as cnt, abs(sum(cogs - total_sales)) as profit
+FROM pharmacy_sales
+WHERE cogs >  total_sales
+GROUP BY 1
+ORDER  BY 3 DESC;
+```
+
+### Pharmacy Analytics (Part 3)
+CVS Health wants to gain a clearer understanding of its pharmacy sales and the performance of various products.
+
+Write a query to calculate the total drug sales for each manufacturer. Round the answer to the nearest million and report your results in descending order of total sales. In case of any duplicates, sort them alphabetically by the manufacturer name.
+
+Since this data will be displayed on a dashboard viewed by business stakeholders, please format your results as follows: "$36 million".
+
+```sql
+SELECT
+  manufacturer, concat('$',round(sum(total_sales)/1000000),' million') as sale
+FROM pharmacy_sales
+GROUP BY 1
+ORDER BY sum(total_sales) DESC, manufacturer;
+```
+
+### Patient Support Analysis (Part 1)
+UnitedHealth Group (UHG) has a program called Advocate4Me, which allows policy holders (or, members) to call an advocate and receive support for their health care needs – whether that's claims and benefits support, drug coverage, pre- and post-authorisation, medical records, emergency assistance, or member portal services.
+
+Write a query to find how many UHG policy holders made three, or more calls, assuming each call is identified by the case_id column.
+
+```sql
+SELECT count(sq.p_holder) as cnt
+FROM (
+SELECT 
+  policy_holder_id as p_holder, count(case_id) as calls
+FROM callers
+GROUP BY 1
+HAVING count(case_id) >= 3) as sq ;
+```
