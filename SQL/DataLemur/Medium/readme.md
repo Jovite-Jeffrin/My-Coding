@@ -85,3 +85,63 @@ GROUP BY 1,2) as sq
 WHERE sq.rn <3
 ORDER BY 1, 3 DESC;
 ```
+
+### Top Three Salaries
+As part of an ongoing analysis of salary distribution within the company, your manager has requested a report identifying high earners in each department. A 'high earner' within a department is defined as an employee with a salary ranking among the top three salaries within that department.
+
+You're tasked with identifying these high earners across all departments. Write a query to display the employee's name along with their department name and salary. In case of duplicates, sort the results of department name in ascending order, then by salary in descending order. If multiple employees have the same salary, then order them alphabetically.
+
+```sql
+WITH cte as (
+SELECT
+  employee_id, name, department_id, salary,
+  DENSE_RANK() OVER(PARTITION BY department_id ORDER BY salary DESC) as rnk
+FROM employee) 
+
+SELECT
+  d.department_name, c.name, c.salary
+FROM cte c 
+JOIN department d on c.department_id = d.department_id
+WHERE rnk <= 3
+ORDER BY d.department_name ASC, c.salary DESC, c.name ASC;
+```
+
+### IBM db2 Product Analytics (Histogram)
+IBM is analyzing how their employees are utilizing the Db2 database by tracking the SQL queries executed by their employees. The objective is to generate data to populate a histogram that shows the number of unique queries run by employees during the third quarter of 2023 (July to September). Additionally, it should count the number of employees who did not run any queries during this period.
+
+Display the number of unique queries as histogram categories, along with the count of employees who executed that number of unique queries.
+
+##### Using Right Join
+```sql
+WITH cte as (
+SELECT
+  e.employee_id, 
+  COALESCE(count(DISTINCT q.query_id),0) as cnt 
+FROM queries q 
+RIGHT JOIN employees e ON q.employee_id = e.employee_id
+AND q.query_starttime >= '2023-07-01T00:00:00Z' AND q.query_starttime  < '2023-10-01T00:00:00Z'
+GROUP BY 1)
+
+SELECT
+  cnt, count(employee_id) as  cont 
+FROM cte 
+GROUP BY 1
+ORDER BY 1;
+```
+
+##### Using Left Join
+```sql
+WITH cte as(
+SELECT
+  e.employee_id, COALESCE(count(DISTINCT q.query_id),0) as cnt 
+FROM employees e 
+LEFT JOIN queries q ON e.employee_id = q.employee_id
+AND q.query_starttime >= '2023-07-01T00:00:00Z' AND q.query_starttime  < '2023-10-01T00:00:00Z'
+GROUP BY 1)
+
+SELECT 
+  cnt, count(employee_id)
+FROM cte 
+GROUP BY 1
+ORDER BY 1;
+```
