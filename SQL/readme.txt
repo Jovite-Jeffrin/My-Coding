@@ -1,1 +1,1 @@
-My SQL Coding repo.
+My SQL Coding repository!
