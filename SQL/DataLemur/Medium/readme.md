@@ -145,3 +145,81 @@ FROM cte
 GROUP BY 1
 ORDER BY 1;
 ```
+
+### Signup Activation Rate
+New TikTok users sign up with their emails. They confirmed their signup by replying to the text confirmation to activate their accounts. Users may receive multiple text messages for account confirmation until they have confirmed their new account.
+
+A senior analyst is interested to know the activation rate of specified users in the emails table. Write a query to find the activation rate. Round the percentage to 2 decimal places.
+
+Definitions:
+* emails table contain the information of user signup details.
+* texts table contains the users' activation information.
+Assumptions:
+* The analyst is interested in the activation rate of specific users in the emails table, which may not include all users that could potentially be found in the texts table. For example, user 123 in the emails table may not be in the texts table and vice versa.
+
+```sql
+SELECT
+  round(count(t.email_id)::DECIMAL/count(e.email_id),2)
+FROM emails e 
+LEFT JOIN texts t ON e.email_id = t.email_id
+AND t.signup_action = 'Confirmed'
+```
+
+### Top 5 Artists
+Assume there are three Spotify tables: artists, songs, and global_song_rank, which contain information about the artists, songs, and music charts, respectively.
+
+Write a query to find the top 5 artists whose songs appear most frequently in the Top 10 of the global_song_rank table. Display the top 5 artist names in ascending order, along with their song appearance ranking.
+
+If two or more artists have the same number of song appearances, they should be assigned the same ranking, and the rank numbers should be continuous (i.e. 1, 2, 2, 3, 4, 5).
+
+```sql
+WITH cte AS(
+  SELECT
+    a.artist_name,
+    dense_rank() OVER(ORDER BY count(s.song_id) DESC) as rnk
+  FROM artists a 
+  JOIN songs s ON a.artist_id = s.artist_id
+  JOIN global_song_rank g ON s.song_id = g.song_id
+  WHERE g.rank <= 10
+  GROUP BY 1)
+
+SELECT 
+  artist_name,rnk
+FROM cte 
+WHERE rnk <= 5;
+```
+
+### Supercloud Customer
+A Microsoft Azure Supercloud customer is defined as a customer who has purchased at least one product from every product category listed in the products table. Write a query that identifies the customer IDs of these Supercloud customers.
+
+```sql
+SELECT
+  cc.customer_id
+FROM customer_contracts cc 
+JOIN products p ON cc.product_id = p.product_id
+GROUP BY 1
+HAVING count(DISTINCT p.product_category) = (SELECT count(DISTINCT product_category) FROM products)
+```
+
+### Odd and Even Measurements
+Assume you're given a table with measurement values obtained from a Google sensor over multiple days with measurements taken multiple times within each day.
+
+Write a query to calculate the sum of odd-numbered and even-numbered measurements separately for a particular day and display the results in two different columns. Refer to the Example Output below for the desired format.
+Definition:
+* Within a day, measurements taken at 1st, 3rd, and 5th times are considered odd-numbered measurements, and measurements taken at 2nd, 4th, and 6th times are considered even-numbered measurements.
+
+```sql
+WITH cte AS(
+SELECT 
+  *,
+  row_number() OVER(PARTITION BY measurement_time::DATE ORDER BY measurement_time) as rnk
+FROM measurements)
+
+SELECT
+  measurement_time::DATE,
+  sum(CASE WHEN rnk%2 <> 0 THEN measurement_value ELSE 0 END) as odd_sum,
+  sum(CASE WHEN rnk%2 = 0 THEN measurement_value ELSE 0 END) as even_sum
+FROM cte
+GROUP BY 1
+ORDER BY 1;
+```
