@@ -45,3 +45,40 @@ def triangle( n:int) ->None:
             print(i,end=" ")
         print("")
 ```
+
+### Seeding
+Sam is planting trees on the upper half region (separated by the left diagonal) of the square shared field. For every value of ‘N’, print the field if the trees are represented by ‘*’.
+
+![image](https://github.com/user-attachments/assets/a826f27a-61a6-4415-8d65-f81bf6bd19b0)
+```python
+def seeding(n: int) -> None:
+    # Write your solution here.
+    for i in range(n,0,-1):
+        for j in range(i):
+            print("* ",end="")
+        print("")
+```
+
+### Reverse Number Triangle
+Aryan and his friends are very fond of the pattern. For a given integer ‘N’, they want to make the Reverse N-Number Triangle.
+
+![image](https://github.com/user-attachments/assets/028d3f0e-03b2-471e-b324-0c9691aec57a)
+```python
+def nNumberTriangle(n: int) -> None:
+    # Write your solution here.
+    for i in range(n,0,-1):
+        for j in range(i):
+            print(j+1," ",end="")
+        print("")
+```
+
+### Star Triangle
+Ninja was very fond of patterns. For a given integer ‘N’, he wants to make the N-Star Triangle.
+
+![image](https://github.com/user-attachments/assets/24add8c4-ce23-4df1-b5a3-372634464dad)
+```python
+def nStarTriangle(n: int) -> None:
+    # Write your code here.
+    for i in range(1, n+1):
+        print(' '*(n-i)+'*'*(2*i-1)+' '*(n-i))
+```
