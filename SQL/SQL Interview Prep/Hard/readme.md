@@ -25,7 +25,7 @@ order by 1, 2 DESC
 ### Find the fraud sellers and buyers
 ![image](https://github.com/user-attachments/assets/e86a18b2-580f-4565-a23c-0a1a8f5d6588)
 
-``sql
+```sql
 WITH cte as (
 	SELECT 
 		transaction_id, customer_id as sellers, 
