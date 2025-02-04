@@ -15,6 +15,7 @@ SELECT
   count(*) as total_orders
 FROM orders
 ```
+![image](https://github.com/user-attachments/assets/839ca475-2b40-460d-869f-d8217097bcbc)
 
 ##### Step 02
 Using Cross Join to match the total_orders with items
