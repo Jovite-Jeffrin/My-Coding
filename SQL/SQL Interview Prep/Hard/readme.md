@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/3e92a2b9-8805-4997-93ba-bca8c50a8fe3)### Derive Points table for ICC tournament
+### Derive Points table for ICC tournament
 ![image](https://github.com/user-attachments/assets/33f2b9eb-af12-4ca4-a7e8-eddad2b4e87f)
 
 ```sql
