@@ -82,3 +82,24 @@ def nStarTriangle(n: int) -> None:
     for i in range(1, n+1):
         print(' '*(n-i)+'*'*(2*i-1)+' '*(n-i))
 ```
+
+### Reverse Star Triangle
+Ninja was very fond of patterns. For a given integer ‘N’, he wants to make the Reverse N-Star Triangle.
+
+![image](https://github.com/user-attachments/assets/2e2ecd5b-7f86-4ba9-af87-89e8a81c289c)
+```python
+def nStarTriangle(n: int) -> None:
+    # Write your code here.
+   for i in range(n, 0, -1):
+    
+        # Inner loop to print space
+        for j in range(i, n):
+            print(" ", end="")
+        
+        # Inner loop to print star
+        for j in range(1, 2 * i):
+            print("*", end="")
+        
+        # Ending line after each row
+        print()
+```
