@@ -103,3 +103,31 @@ def nStarTriangle(n: int) -> None:
         # Ending line after each row
         print()
 ```
+
+### Star Diamond
+Ninja was very fond of patterns. For a given integer ‘N’, he wants to make the N-Star Diamond.
+
+![image](https://github.com/user-attachments/assets/a7765084-c83a-4a3f-9746-3364b7f32fae)
+```python
+def nStarDiamond(n: int) -> None:
+    # Write your code here.
+    for i in range(n):
+        # for upper pyramid
+        for j in range(i,n-1):
+            print(' ',end='')
+        for j in range(0,2*i+1):
+            print('*',end='')
+        for j in range(i,n-1):
+            print(' ',end='')
+        print('')
+
+    for i in range(n-1,-1,-1):
+        # for inverted  pyramid
+        for j in range(i,n-1):
+            print(' ',end='')
+        for j in range(0,2*i+1):
+            print('*',end='')
+        for j in  range(i,n-1):
+            print(' ',end='')
+        print('')
+```
