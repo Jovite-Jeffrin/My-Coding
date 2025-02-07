@@ -252,3 +252,19 @@ SELECT
 FROM correct_orders
 ORDER BY 1;
 ```
+
+### User Shopping Sprees
+In an effort to identify high-value customers, Amazon asked for your help to obtain data about users who go on shopping sprees. A shopping spree occurs when a user makes purchases on 3 or more consecutive days. List the user IDs who have gone on at least 1 shopping spree in ascending order.
+> By using LEAD funtion and setting the value to 2 results in getting the third date if available. Thus the absence of such value means we didn't meet the '3 day spree' requirement. But the presence of a value means we did for that user. we then select user_id which met the criteria of having at least one entry in the lead column.
+
+```sql
+SELECT
+  sq.user_id
+FROM
+(SELECT
+  *,
+  lead(transaction_date,2) OVER(PARTITION BY user_id ORDER BY user_id, transaction_date) as ld 
+FROM transactions) as sq 
+GROUP BY sq.user_id
+HAVING count(ld) >= 1;
+```
