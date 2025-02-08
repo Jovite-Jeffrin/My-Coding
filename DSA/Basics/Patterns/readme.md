@@ -9,6 +9,8 @@ def nForest(n:int) ->None:
         print("* "*n)
 ```
 
+----
+
 ### N/2-Forest
 Sam is making a forest visualizer. An N-dimensional forest is represented by the pattern of size NxN filled with ‘*’. An N/2-dimensional forest is represented by the lower triangle of the pattern filled with ‘*’. For every value of ‘N’, help sam to print the corresponding N/2-dimensional forest.
 
@@ -33,6 +35,8 @@ def nTriangle(n:int) ->None:
         print("")
 ```
 
+----
+
 ###  Triangle
 Sam is making a Triangular painting for a maths project. An N-dimensional Triangle is represented by the lower triangle of the pattern filled with integers representing the row number. For every value of ‘N’, help sam to print the corresponding Triangle.
 
@@ -45,6 +49,8 @@ def triangle( n:int) ->None:
             print(i,end=" ")
         print("")
 ```
+
+----
 
 ### Seeding
 Sam is planting trees on the upper half region (separated by the left diagonal) of the square shared field. For every value of ‘N’, print the field if the trees are represented by ‘*’.
@@ -59,6 +65,8 @@ def seeding(n: int) -> None:
         print("")
 ```
 
+----
+
 ### Reverse Number Triangle
 Aryan and his friends are very fond of the pattern. For a given integer ‘N’, they want to make the Reverse N-Number Triangle.
 
@@ -72,6 +80,8 @@ def nNumberTriangle(n: int) -> None:
         print("")
 ```
 
+----
+
 ### Star Triangle
 Ninja was very fond of patterns. For a given integer ‘N’, he wants to make the N-Star Triangle.
 
@@ -82,6 +92,8 @@ def nStarTriangle(n: int) -> None:
     for i in range(1, n+1):
         print(' '*(n-i)+'*'*(2*i-1)+' '*(n-i))
 ```
+
+----
 
 ### Reverse Star Triangle
 Ninja was very fond of patterns. For a given integer ‘N’, he wants to make the Reverse N-Star Triangle.
@@ -103,6 +115,8 @@ def nStarTriangle(n: int) -> None:
         # Ending line after each row
         print()
 ```
+
+----
 
 ### Star Diamond
 Ninja was very fond of patterns. For a given integer ‘N’, he wants to make the N-Star Diamond.
@@ -129,5 +143,23 @@ def nStarDiamond(n: int) -> None:
             print('*',end='')
         for j in  range(i,n-1):
             print(' ',end='')
+        print('')
+```
+----
+
+### Rotated Triangle
+Ninja was very fond of patterns. For a given integer ‘N’, he wants to make the N-Star Rotated Triangle.
+
+![image](https://github.com/user-attachments/assets/82d07cd1-e023-4d0d-8a91-5511419479a2)
+```python
+def nStarTriangle(n: int) -> None:
+    # Write your code here.
+    for i in range(n):
+        for j in range(i+1):
+            print('*', end='')
+        print('')
+    for i in range(n-1,0,-1):
+        for j in range(i):
+            print('*',end='')
         print('')
 ```
