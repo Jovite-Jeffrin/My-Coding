@@ -268,3 +268,22 @@ FROM transactions) as sq
 GROUP BY sq.user_id
 HAVING count(ld) >= 1;
 ```
+
+### Histogram of Users and Purchases
+Assume you're given a table on Walmart user transactions. Based on their most recent transaction date, write a query that retrieve the users along with the number of products they bought.
+Output the user's most recent transaction date, user ID, and the number of products, sorted in chronological order by the transaction date.
+
+```sql
+WITH cte AS(
+SELECT 
+  transaction_date, user_id, product_id,
+  RANK() OVER(PARTITION BY user_id ORDER BY transaction_date DESC) as rn 
+FROM user_transactions)
+
+SELECT
+  transaction_date, user_id, count(product_id)
+FROM cte 
+WHERE rn = 1
+GROUP BY 1,2
+ORDER BY 1;
+```
