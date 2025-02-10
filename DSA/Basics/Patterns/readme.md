@@ -163,3 +163,19 @@ def nStarTriangle(n: int) -> None:
             print('*',end='')
         print('')
 ```
+
+### Binary Number Triangle
+Aryan and his friends are very fond of the pattern. For a given integer ‘N’, they want to make the N-Binary Number Triangle. You are required to print the pattern as shown in the examples below.
+
+![image](https://github.com/user-attachments/assets/4f1db9ef-a903-4777-9b0e-41eaa61d84da)
+```python
+def nBinaryTriangle(n: int) -> None:
+    # Write your solution here.
+    for i in range(1,n+1):
+        for j in  range(0,i):
+            if (i+j) % 2 == 0:
+                print("0 ",end='')
+            else:
+                print("1 ",end='')
+        print("")
+```
