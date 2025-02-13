@@ -270,7 +270,6 @@ HAVING count(case_id) >= 3) as sq ;
 
 ### Compressed Mode
 You're given a table containing the item count for each order on Alibaba, along with the frequency of orders that have the same item count. Write a query to retrieve the mode of the order occurrences. Additionally, if there are multiple item counts with the same mode, the results should be sorted in ascending order.
-
 Clarifications:
 * item_count: Represents the number of items sold in each order.
 * order_occurrences: Represents the frequency of orders with the corresponding number of items sold per order.
@@ -284,3 +283,18 @@ WHERE order_occurrences = (SELECT max(order_occurrences) FROM items_per_order)
 ORDER BY 1;
 ```
 
+### Card Launch Success
+Your team at JPMorgan Chase is soon launching a new credit card. You are asked to estimate how many cards you'll issue in the first month. Before you can answer this question, you want to first get some perspective on how well new credit card launches typically do in their first month.
+
+Write a query that outputs the name of the credit card, and how many cards were issued in its launch month. The launch month is the earliest record in the monthly_cards_issued table for a given card. Order the results starting from the biggest issued amount.
+
+```sql
+SELECT
+  sq.card_name, sq.issued_amount
+FROM (SELECT 
+  *,
+  ROW_NUMBER() OVER(PARTITION BY card_name ORDER BY issue_year, issue_month) as rn
+FROM monthly_cards_issued) as sq 
+WHERE sq.rn = 1
+ORDER BY 2 DESC;
+```
