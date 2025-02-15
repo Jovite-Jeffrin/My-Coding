@@ -1,3 +1,3 @@
 ## Solving Free problems on Datalemur
 
-![image](https://github.com/user-attachments/assets/da24820f-e063-4fa9-b8ee-6d14ad1f692c)
+![image](https://github.com/user-attachments/assets/9b7bc355-6852-4b20-b395-0dda25f2491a)
