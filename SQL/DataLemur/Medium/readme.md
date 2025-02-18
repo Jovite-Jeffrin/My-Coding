@@ -287,3 +287,26 @@ WHERE rn = 1
 GROUP BY 1,2
 ORDER BY 1;
 ```
+
+### FAANG Stock Min-Max (Part 1)
+The Bloomberg terminal is the go-to resource for financial professionals, offering convenient access to a wide array of financial datasets. As a Data Analyst at Bloomberg, you have access to historical data on stock performance.
+
+Currently, you're analyzing the highest and lowest open prices for each FAANG stock by month over the years.
+
+For each FAANG stock, display the ticker symbol, the month and year ('Mon-YYYY') with the corresponding highest and lowest open prices (refer to the Example Output format). Ensure that the results are sorted by ticker symbol.
+
+```sql
+WITH cte AS(
+  SELECT
+    ticker, TO_CHAR(date, 'Mon-YYYY') as date, open
+  FROM stock_prices)
+  
+SELECT 
+  DISTINCT ticker, 
+  FIRST_VALUE(date) OVER(PARTITION BY ticker ORDER BY open desc) as high_mnth,
+  FIRST_VALUE(open) OVER(PARTITION BY ticker ORDER BY open desc) as high_open,
+  FIRST_VALUE(date) OVER(PARTITION BY ticker ORDER BY open) as low_mnth,
+  FIRST_VALUE(open) OVER(PARTITION BY ticker ORDER BY open) as low_open
+FROM cte
+ORDER BY 1
+```
