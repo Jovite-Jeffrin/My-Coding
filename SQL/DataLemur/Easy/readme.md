@@ -268,6 +268,19 @@ GROUP BY 1
 HAVING count(case_id) >= 3) as sq ;
 ```
 
+### Patient Support Analysis (Part 2)
+UnitedHealth Group (UHG) has a program called Advocate4Me, which allows policy holders (or, members) to call an advocate and receive support for their health care needs – whether that's claims and benefits support, drug coverage, pre- and post-authorisation, medical records, emergency assistance, or member portal services.
+
+Calls to the Advocate4Me call centre are classified into various categories, but some calls cannot be neatly categorised. These uncategorised calls are labeled as “n/a”, or are left empty when the support agent does not enter anything into the call category field.
+
+Write a query to calculate the percentage of calls that cannot be categorised. Round your answer to 1 decimal place. For example, 45.0, 48.5, 57.7.
+
+```sql
+SELECT
+  round(100.0 * sum(CASE WHEN call_category = 'n/a' or call_category IS NULL THEN 1 ELSE 0 END)/count(*),1)
+FROM callers
+```
+
 ### Compressed Mode
 You're given a table containing the item count for each order on Alibaba, along with the frequency of orders that have the same item count. Write a query to retrieve the mode of the order occurrences. Additionally, if there are multiple item counts with the same mode, the results should be sorted in ascending order.
 Clarifications:
