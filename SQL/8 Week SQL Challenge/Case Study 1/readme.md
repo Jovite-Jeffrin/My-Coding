@@ -1,4 +1,5 @@
 ### Table creation
+```sql
 CREATE SCHEMA dannys_diner;
 SET search_path = dannys_diner;
 
@@ -57,10 +58,11 @@ VALUES
   ('B', '2021-01-09');
 
 DROP TABLE members;
-SELECT * from members;  
+SELECT * from members;
+```
   
   /* --------------------
-####   Case Study Questions
+###  Case Study Questions
    --------------------*/
 
 ##### 1. What is the total amount each customer spent at the restaurant?
