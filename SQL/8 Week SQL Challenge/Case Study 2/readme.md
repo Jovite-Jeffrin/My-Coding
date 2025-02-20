@@ -118,3 +118,6 @@ VALUES
   (11, 'Tomatoes'),
   (12, 'Tomato Sauce');
 ```
+
+#### ER Diagram
+![image](https://github.com/user-attachments/assets/42eb694a-3e61-4d4a-abc0-b2ab251f798c)
