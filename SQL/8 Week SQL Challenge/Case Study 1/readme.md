@@ -1,4 +1,4 @@
-Case Study #1: [Click here!](https://8weeksqlchallenge.com/case-study-1/)
+### Case Study #1: [Click here!](https://8weeksqlchallenge.com/case-study-1/)
 
 ### Table creation
 ```sql
