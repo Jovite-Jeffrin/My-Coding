@@ -122,6 +122,29 @@ VALUES
 #### ER Diagram
 ![image](https://github.com/user-attachments/assets/42eb694a-3e61-4d4a-abc0-b2ab251f798c)
 
+#### Data Cleaning
+```sql
+UPDATE customer_orders
+SET exclusions = NULL WHERE exclusions = '' or exclusions = 'null';
+
+UPDATE customer_orders
+SET extras = NULL WHERE extras = '' or extras = 'null';
+
+SELECT * from runner_orders;
+
+UPDATE runner_orders
+SET cancellation = NULL WHERE cancellation = '' or cancellation = 'null';
+
+UPDATE runner_orders
+SET pickup_time = NULL WHERE pickup_time = 'null';
+
+UPDATE runner_orders
+SET distance = NULL WHERE distance = 'null';
+
+UPDATE runner_orders
+SET duration = NULL WHERE duration = 'null';
+```
+
 #### Pizza Metrics
 1. How many pizzas were ordered?
 ```sql
