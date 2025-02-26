@@ -68,7 +68,7 @@ FROM transactions)
 SELECT 
   count(1) as payment_count 
 FROM cte
-WHERE (ld::time - transaction_timestamp::TIME) <= '00:10:00'::TIME;
+WHERE (ld::TIME - transaction_timestamp::TIME) <= '00:10:00'::TIME;
 ```
 
 ---
