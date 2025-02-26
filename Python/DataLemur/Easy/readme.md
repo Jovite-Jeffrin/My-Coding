@@ -40,3 +40,26 @@ def contains_duplicate(input)-> bool:
     return False
   return True
 ```
+
+---
+
+### Intersection of Two Lists
+Write a function to get the intersection of two lists.
+
+For example, if A = [1, 2, 3, 4, 5], and B = [0, 1, 3, 7] then you should return [1, 3].
+
+##### Method 1
+```python
+def intersection(a, b):
+  return list(set(a).intersection(b))
+```
+
+##### Method 2
+```python
+def intersection(a, b):  
+  ls = []
+  for i in a:
+    if i in b and i not in ls:
+      ls.append(i)
+  return ls
+```
