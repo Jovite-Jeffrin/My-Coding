@@ -106,3 +106,32 @@ SELECT
 FROM cte
 ORDER BY 1
 ```
+
+---
+
+### International Call Percentage
+A phone call is considered an international call when the person calling is in a different country than the person receiving the call. What percentage of phone calls are international? Round the result to 1 decimal.
+
+Assumption:
+* The caller_id in phone_info table refers to both the caller and receiver.
+
+![image](https://github.com/user-attachments/assets/b50fb24a-72c2-4fe3-a850-ed46c55a9680)
+![image](https://github.com/user-attachments/assets/f5e1e153-e9d6-49b2-b9f5-7a97b5ac7d66)
+```sql
+WITH cte AS(
+  SELECT
+    pc.caller_id, p1.country_id AS caller_country_id, pc.receiver_id, 
+    p2.country_id AS receiver_country_id
+  FROM phone_calls pc 
+  JOIN phone_info p1 ON pc.caller_id = p1.caller_id
+  JOIN phone_info p2 ON pc.receiver_id = p2.caller_id),
+cte2 AS(
+  SELECT
+    sum(CASE WHEN caller_country_id != receiver_country_id THEN 1.0 ELSE 0 END) AS foreign_calls,
+    count(*) as total_calls
+  FROM cte )
+
+SELECT
+  round((foreign_calls/total_calls)*100,1) as calls
+FROM cte2;
+```
