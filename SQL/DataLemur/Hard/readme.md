@@ -73,3 +73,19 @@ WHERE (ld::TIME - transaction_timestamp::TIME) <= '00:10:00'::TIME;
 
 ---
 
+### Active User Retention
+Assume you're given a table containing information on Facebook user actions. Write a query to obtain number of monthly active users (MAUs) in July 2022, including the month in numerical format "1, 2, 3".
+
+Hint:
+* An active user is defined as a user who has performed actions such as 'sign-in', 'like', or 'comment' in both the current month and the previous month.
+![image](https://github.com/user-attachments/assets/bf49c1ee-d7da-4e34-b748-c126423a0963)
+```sql
+SELECT
+  EXTRACT(MONTH FROM event_date), count(DISTINCT user_id)
+FROM user_actions 
+WHERE 
+  EXTRACT(MONTH FROM event_date) = 7 AND EXTRACT(YEAR FROM event_date) = 2022 AND
+  user_id IN (SELECT user_id FROM user_actions WHERE EXTRACT(MONTH FROM event_date) = 6)
+GROUP BY 1
+ORDER BY 1;
+```
