@@ -112,3 +112,39 @@ GROUP BY 1
 order by 1;
 ```
 ![image](https://github.com/user-attachments/assets/ac7c6417-2429-4323-8a74-7a70df1ccd00)
+
+---
+
+
+### Trips and Users [Link](https://youtu.be/EjzhMv0E_FE?si=yKVzgxS9FutTtpLE)
+![image](https://github.com/user-attachments/assets/74c5000c-9023-4172-ab6c-9c2a820c0da1)
+
+##### Task 01:
+Joining the master table with client and driver
+
+```sql
+SELECT
+	*
+FROM trips t 
+JOIN users u1 ON t.client_id = u1.users_id -- with client 
+JOIN users u2 ON t.driver_id = u2.users_id -- with driver
+```
+![image](https://github.com/user-attachments/assets/2c656ce3-1fdb-45df-b1b7-29a01833cdc0)
+
+##### Task 02:
+Finding thecancellation rates
+
+```sql
+SELECT
+	request_at, 
+    SUM(CASE WHEN status IN ('cancelled_by_driver','cancelled_by_client') THEN 1 ELSE 0 END) as cancelled_trips,
+    count(1) as no_of_rides,
+    round(SUM(CASE WHEN status IN ('cancelled_by_driver','cancelled_by_client') THEN 1.0 ELSE 0 END) /
+    count(1.0) * 100.0,2) as cancellation_rates
+FROM trips t 
+JOIN users u1 ON t.client_id = u1.users_id
+JOIN users u2 ON t.driver_id = u2.users_id
+WHERE u1.banned = 'No' AND u2.banned = 'No'
+GROUP BY 1;
+```
+![image](https://github.com/user-attachments/assets/68510d9f-f0c9-4fee-abad-6bf04126aa93)
