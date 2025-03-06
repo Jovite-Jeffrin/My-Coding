@@ -90,6 +90,8 @@ GROUP BY 1
 ORDER BY 1;
 ```
 
+---
+
 ### Y-on-Y Growth Rate
 Assume you're given a table containing information about Wayfair user transactions for different products. Write a query to calculate the year-on-year growth rate for the total spend of each product, grouping the results by product ID.
 
