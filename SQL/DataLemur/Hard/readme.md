@@ -89,3 +89,32 @@ WHERE
 GROUP BY 1
 ORDER BY 1;
 ```
+
+### Y-on-Y Growth Rate
+Assume you're given a table containing information about Wayfair user transactions for different products. Write a query to calculate the year-on-year growth rate for the total spend of each product, grouping the results by product ID.
+
+The output should include the year in ascending order, product ID, current year's spend, previous year's spend and year-on-year growth percentage, rounded to 2 decimal places.
+
+> (Current Year Earnings — Last Year’s Earnings) / Last Year’s Earnings x 100
+
+![image](https://github.com/user-attachments/assets/71a46443-5b6c-4a4a-b4c8-187e1fdb8ce7)
+```sql
+WITH cte AS(
+  SELECT 
+    EXTRACT(YEAR FROM transaction_date) AS year,
+    product_id,
+    sum(spend) as curr_spend
+  FROM user_transactions
+  GROUP BY 1,2),
+cte2 AS(
+  SELECT 
+    year, product_id, curr_spend,
+    lag(curr_spend,1) OVER(PARTITION BY product_id ORDER BY product_id, year) as prev_spend
+  FROM cte)
+
+SELECT
+  year, product_id, curr_spend, prev_spend,
+  round(1.0 * (curr_spend - prev_spend)/prev_spend * 100.00, 2) as yoy_rate
+FROM cte2
+ORDER BY 2,1;
+```
