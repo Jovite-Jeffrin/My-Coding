@@ -1,4 +1,4 @@
-### Case Study 2 [Click Here!](https://8weeksqlchallenge.com/case-study-2/)
+### Case Study 2 ([Click Here!](https://8weeksqlchallenge.com/case-study-2/))
 
 #### Table creation
 ```sql
@@ -153,12 +153,7 @@ FROM customer_orders;
 ```
 
 2. How many unique customer orders were made?
-```sql
-SELECT customer_id, COUNT(DISTINCT pizza_id) as no_of_pizza_orders
-FROM customer_orders
-GROUP BY 1
-ORDER BY 1;
-```
+
 
 3. How many successful orders were delivered by each runner?
 4. How many of each type of pizza was delivered?
