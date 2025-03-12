@@ -147,7 +147,10 @@ SET duration = NULL WHERE duration = 'null';
 
 #### Pizza Metrics
 1. How many pizzas were ordered?
-
+```sql
+SELECT COUNT(pizza_id) as no_of_pizza_ordered
+FROM customer_orders;
+```
 
 2. How many unique customer orders were made?
 
