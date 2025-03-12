@@ -159,6 +159,25 @@ FROM customer_orders
 group by 1;
 ```
 
+###### Data cleaning
+```sql
+UPDATE runner_orders set distance = 
+CASE
+	  WHEN distance LIKE 'null' THEN ' '
+	  WHEN distance LIKE '%km' THEN TRIM('km' from distance)
+	  ELSE distance 
+    END;
+   
+UPDATE runner_orders set duration = 
+  CASE
+	  WHEN duration LIKE 'null' THEN ' '
+	  WHEN duration LIKE '%mins' THEN TRIM('mins' from duration)
+	  WHEN duration LIKE '%minute' THEN TRIM('minute' from duration)
+	  WHEN duration LIKE '%minutes' THEN TRIM('minutes' from duration)
+	  ELSE duration
+	  END;
+```
+
 3. How many successful orders were delivered by each runner?
 4. How many of each type of pizza was delivered?
 5. How many Vegetarian and Meatlovers were ordered by each customer?
