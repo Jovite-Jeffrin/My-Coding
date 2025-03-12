@@ -153,7 +153,11 @@ FROM customer_orders;
 ```
 
 2. How many unique customer orders were made?
-
+```sql
+SELECT customer_id, count(DISTINCT order_id) as unique_orders
+FROM customer_orders
+group by 1;
+```
 
 3. How many successful orders were delivered by each runner?
 4. How many of each type of pizza was delivered?
