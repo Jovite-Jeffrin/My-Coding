@@ -163,14 +163,16 @@ group by 1;
 ```sql
 UPDATE runner_orders set distance = 
 CASE
-	  WHEN distance LIKE 'null' THEN ' '
+	  WHEN distance LIKE 'null' THEN NULL
+      WHEN distance LIKE '' THEN NULL
 	  WHEN distance LIKE '%km' THEN TRIM('km' from distance)
 	  ELSE distance 
     END;
    
 UPDATE runner_orders set duration = 
   CASE
-	  WHEN duration LIKE 'null' THEN ' '
+	  WHEN duration LIKE 'null' THEN NULL
+      WHEN duration LIKE '' THEN NULL
 	  WHEN duration LIKE '%mins' THEN TRIM('mins' from duration)
 	  WHEN duration LIKE '%minute' THEN TRIM('minute' from duration)
 	  WHEN duration LIKE '%minutes' THEN TRIM('minutes' from duration)
