@@ -190,11 +190,12 @@ WHERE distance is NOT NULL;
 4. How many of each type of pizza was delivered?
 ```sql
 SELECT
-	co.pizza_id, pn.pizza_name, COUNT(order_id) as ordered
+	co.pizza_id, count(ro.order_id) as orders
 FROM customer_orders co 
-JOIN pizza_names pn on co.pizza_id = pn.pizza_id
-GROUP by 1,2
-order BY 1,2;
+JOIN runner_orders ro on co.order_id = ro.order_id
+where ro.distance is not NULL
+GROUP by 1
+order BY 1;
 ```
 
 5. How many Vegetarian and Meatlovers were ordered by each customer?
