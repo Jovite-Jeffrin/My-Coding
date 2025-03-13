@@ -1,4 +1,4 @@
-### Case Study 2 ([Click Here!](https://8weeksqlchallenge.com/case-study-2/))
+### Case Study 2 ([Click Here](https://8weeksqlchallenge.com/case-study-2/))
 
 #### Table creation
 ```sql
@@ -252,3 +252,10 @@ ORDER BY 1,2;
 ![image](https://github.com/user-attachments/assets/8c645682-c0ea-4cc9-93ba-39d8660c6404)
 
 10. What was the volume of orders for each day of the week?
+```sql
+SELECT
+	TO_CHAR(order_time + INTERVAL '2 days', 'Day') as day,
+    COUNT(*) as orders
+FROM customer_orders
+GROUP by 1;
+```
