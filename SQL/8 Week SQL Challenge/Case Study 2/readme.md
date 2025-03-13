@@ -231,6 +231,13 @@ GROUP by 1;
 ```
 
 8. How many pizzas were delivered that had both exclusions and extras?
+```sql
+SELECT pizza_id, COUNT(*) as count 
+FROM customer_orders co 
+JOIN runner_orders ro on co.order_id = ro.order_id
+WHERE duration is not NULL and exclusions is not NULL and extras is not NULL
+GROUP BY 1;
+```
 
 9. What was the total volume of pizzas ordered for each hour of the day?
 
