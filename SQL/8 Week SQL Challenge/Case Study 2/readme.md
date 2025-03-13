@@ -199,6 +199,14 @@ order BY 1;
 ```
 
 5. How many Vegetarian and Meatlovers were ordered by each customer?
+```sql
+SELECT
+	co.pizza_id, pn.pizza_name, COUNT(order_id) as ordered
+FROM customer_orders co 
+JOIN pizza_names pn on co.pizza_id = pn.pizza_id
+GROUP by 1,2
+order BY 1,2;
+```
 
 6. What was the maximum number of pizzas delivered in a single order?
 
