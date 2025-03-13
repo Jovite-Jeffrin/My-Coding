@@ -240,5 +240,15 @@ GROUP BY 1;
 ```
 
 9. What was the total volume of pizzas ordered for each hour of the day?
+```sql
+SELECT
+	order_time::DATE as order_time,
+    EXTRACT(HOUR FROM order_time) as hour,
+    COUNT(*) as orders
+FROM customer_orders
+GROUP by 1,2
+ORDER BY 1,2;
+```
+![image](https://github.com/user-attachments/assets/8c645682-c0ea-4cc9-93ba-39d8660c6404)
 
 10. What was the volume of orders for each day of the week?
