@@ -209,6 +209,14 @@ order BY 1,2;
 ```
 
 6. What was the maximum number of pizzas delivered in a single order?
+```sql
+SELECT
+	co.pizza_id, pn.pizza_name, COUNT(order_id) as ordered
+FROM customer_orders co 
+JOIN pizza_names pn on co.pizza_id = pn.pizza_id
+GROUP by 1,2
+order BY 1,2;
+```
 
 7. For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
 
