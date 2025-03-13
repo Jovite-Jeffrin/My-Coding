@@ -219,6 +219,16 @@ order BY 1,2;
 ```
 
 7. For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
+```sql
+SELECT
+	customer_id, 
+    sum(CASE 
+    when exclusions <> '' or extras <> '' then 1 else 0 end) as "Atleast a change",
+    sum(CASE 
+    when exclusions is null and extras is null then 1 else 0 end) "No change"
+FROM customer_orders
+GROUP by 1;
+```
 
 8. How many pizzas were delivered that had both exclusions and extras?
 
