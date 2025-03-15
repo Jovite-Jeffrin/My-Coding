@@ -269,6 +269,7 @@ SELECT
 FROM WEEK2.RUNNERS 
 GROUP BY 1
 ```
+![image](https://github.com/user-attachments/assets/441bdf5f-1909-4f40-87e4-33ead0ed53b8)
 
 2. What was the average time in minutes it took for each runner to arrive at the Pizza Runner HQ to pickup the order?
 ```SQL
@@ -278,6 +279,9 @@ FROM WEEK2.CUSTOMER_ORDERS CO
 JOIN WEEK2.RUNNER_ORDERS RO ON CO.ORDER_ID = RO.ORDER_ID
 WHERE RO.PICKUP_TIME IS NOT NULL;
 ```
+![image](https://github.com/user-attachments/assets/1d522466-1ead-448a-afb9-b567db39d15e)
+
+
 
 3. Is there any relationship between the number of pizzas and how long the order takes to prepare?
 ```SQL
@@ -289,6 +293,7 @@ WHERE RO.PICKUP_TIME IS NOT NULL
 GROUP BY 1
 ORDER BY 1; -- NO
 ```
+![image](https://github.com/user-attachments/assets/2eea6b59-ecf8-41c5-aba6-008ae0c045ea)
 
 4. What was the average distance travelled for each customer?
 ```SQL
@@ -299,12 +304,16 @@ JOIN WEEK2.RUNNER_ORDERS RO ON CO.ORDER_ID = RO.ORDER_ID
 WHERE RO.DISTANCE::NUMERIC != 0
 GROUP BY 1;
 ```
+![image](https://github.com/user-attachments/assets/72dd043d-bcfc-404f-b743-4613911848c9)
+
 
 5. What was the difference between the longest and shortest delivery times for all orders?
 ```SQL
 SELECT MAX(DURATION::NUMERIC) - MIN(DURATION::NUMERIC) AS MINT
 FROM WEEK2.RUNNER_ORDERS;
 ```
+![image](https://github.com/user-attachments/assets/4957c9fb-4811-47d3-8853-b8f3e00b4961)
+
 
 6. What was the average speed for each runner for each delivery and do you notice any trend for these values?
 ```SQL
@@ -317,6 +326,8 @@ WHERE DISTANCE IS NOT NULL AND DURATION IS NOT NULL
 GROUP BY 1
 ORDER BY 1;
 ```
+![image](https://github.com/user-attachments/assets/849dc3de-7624-4dfe-9891-7efacac435a9)
+
 
 7. What is the successful delivery percentage for each runner?
 ```SQL
@@ -327,3 +338,4 @@ FROM WEEK2.RUNNER_ORDERS
 GROUP BY 1
 ORDER BY 1;
 ```
+![image](https://github.com/user-attachments/assets/81e5f214-1bc7-4d52-926b-84e29262c3ab)
