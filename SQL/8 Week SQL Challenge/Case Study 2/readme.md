@@ -259,3 +259,71 @@ SELECT
 FROM customer_orders
 GROUP by 1;
 ```
+
+### B. Runner and Customer Experience
+1. How many runners signed up for each 1 week period? (i.e. week starts 2021-01-01)
+```SQL
+SELECT
+	 EXTRACT(WEEK FROM REGISTRATION_DATE) AS WEEK,
+	 COUNT(RUNNER_ID)
+FROM WEEK2.RUNNERS 
+GROUP BY 1
+```
+
+2. What was the average time in minutes it took for each runner to arrive at the Pizza Runner HQ to pickup the order?
+```SQL
+SELECT 
+	AVG(RO.PICKUP_TIME::TIMESTAMP - CO.ORDER_TIME::TIMESTAMP) AS AVG_TIME
+FROM WEEK2.CUSTOMER_ORDERS CO
+JOIN WEEK2.RUNNER_ORDERS RO ON CO.ORDER_ID = RO.ORDER_ID
+WHERE RO.PICKUP_TIME IS NOT NULL;
+```
+
+3. Is there any relationship between the number of pizzas and how long the order takes to prepare?
+```SQL
+SELECT 
+	CO.PIZZA_ID, COUNT(*) AS NO_OF_PIZZA, AVG(RO.PICKUP_TIME::TIMESTAMP - CO.ORDER_TIME::TIMESTAMP) AS AVG_TIME_TO_PREPARE
+FROM WEEK2.CUSTOMER_ORDERS CO
+JOIN WEEK2.RUNNER_ORDERS RO ON CO.ORDER_ID = RO.ORDER_ID
+WHERE RO.PICKUP_TIME IS NOT NULL
+GROUP BY 1
+ORDER BY 1; -- NO
+```
+
+4. What was the average distance travelled for each customer?
+```SQL
+SELECT
+	CO.CUSTOMER_ID, ROUND(AVG(RO.DISTANCE::NUMERIC),2)
+FROM WEEK2.CUSTOMER_ORDERS CO 
+JOIN WEEK2.RUNNER_ORDERS RO ON CO.ORDER_ID = RO.ORDER_ID 
+WHERE RO.DISTANCE::NUMERIC != 0
+GROUP BY 1;
+```
+
+5. What was the difference between the longest and shortest delivery times for all orders?
+```SQL
+SELECT MAX(DURATION::NUMERIC) - MIN(DURATION::NUMERIC) AS MINT
+FROM WEEK2.RUNNER_ORDERS;
+```
+
+6. What was the average speed for each runner for each delivery and do you notice any trend for these values?
+```SQL
+SELECT
+	RUNNER_ID,
+	ROUND(AVG(DISTANCE::NUMERIC)) AVG_DISTANCE,
+	ROUND(AVG(DURATION::NUMERIC)) AVG_DURATION
+FROM WEEK2.RUNNER_ORDERS
+WHERE DISTANCE IS NOT NULL AND DURATION IS NOT NULL
+GROUP BY 1
+ORDER BY 1;
+```
+
+7. What is the successful delivery percentage for each runner?
+```SQL
+SELECT
+	RUNNER_ID,
+	ROUND(SUM(CASE WHEN DURATION IS NOT NULL THEN 1 ELSE 0 END) * 100.00/ COUNT(*)) AS SUCCESS_PERCENTAGE
+FROM WEEK2.RUNNER_ORDERS
+GROUP BY 1
+ORDER BY 1;
+```
