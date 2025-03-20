@@ -260,6 +260,8 @@ FROM customer_orders
 GROUP by 1;
 ```
 
+---
+
 ### B. Runner and Customer Experience
 1. How many runners signed up for each 1 week period? (i.e. week starts 2021-01-01)
 ```SQL
@@ -339,3 +341,44 @@ GROUP BY 1
 ORDER BY 1;
 ```
 ![image](https://github.com/user-attachments/assets/81e5f214-1bc7-4d52-926b-84e29262c3ab)
+
+---
+
+### C. Ingredient Optimisation
+###### Altering Table
+```sql
+CREATE TABLE week2.pizza_recipe AS 
+(WITH separated_toppings AS (
+  SELECT 
+    pizza_id,
+    unnest(string_to_array(toppings, ', ')) AS topping
+  FROM week2.pizza_recipes
+)
+SELECT pizza_id, topping::int
+FROM separated_toppings);
+```
+
+1. What are the standard ingredients for each pizza?
+
+2. What was the most commonly added extra?
+```sql
+SELECT 
+	EXTRAS, COUNT(ORDER_ID) AS ORDERS
+FROM WEEK2.CUSTOMER_ORDERS 
+WHERE EXTRAS IS NOT NULL
+GROUP BY 1
+ORDER BY 1;
+```
+
+3. What was the most common exclusion?
+
+4. Generate an order item for each record in the customers_orders table in the format of one of the following:
+	* Meat Lovers
+	* Meat Lovers - Exclude Beef
+	* Meat Lovers - Extra Bacon
+	* Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers
+
+5. Generate an alphabetically ordered comma separated ingredient list for each pizza order from the customer_orders table and add a 2x in front of any relevant ingredients
+	* For example: "Meat Lovers: 2xBacon, Beef, ... , Salami"
+
+6. What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?
