@@ -1,4 +1,4 @@
-### Case Study #3 - Foodie-Fi
+### Case Study #3 - Foodie-Fi [Link](https://8weeksqlchallenge.com/case-study-3/)
 
 ##### Table 1: plans
 Customers can choose which plans to join Foodie-Fi when they first sign up.
