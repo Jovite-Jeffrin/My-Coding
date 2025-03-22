@@ -123,11 +123,12 @@ ORDER BY 2,1;
 
 ---
 
-### Department vs. Company Salary 
+### Department vs. Company Salary [Link](https://datalemur.com/questions/sql-department-company-salary-comparison)
 You work as a data analyst for a FAANG company that tracks employee salaries over time. The company wants to understand how the average salary in each department compares to the company's overall average salary each month.
 
 Write a query to compare the average salary of employees in each department to the company's average salary for March 2024. Return the comparison result as 'higher', 'lower', or 'same' for each department. Display the department ID, payment month (in MM-YYYY format), and the comparison result.
-![image](https://github.com/user-attachments/assets/31bfd459-1183-480c-a9e5-5160d079a426)
+
+![image](https://github.com/user-attachments/assets/4193de86-482b-451a-a6c9-eacabc898cb6)
 ![image](https://github.com/user-attachments/assets/9d29f71d-4737-4594-9fe5-6feff08ff2d1)
 ```sql
 ```
