@@ -131,4 +131,24 @@ Write a query to compare the average salary of employees in each department to t
 ![image](https://github.com/user-attachments/assets/4193de86-482b-451a-a6c9-eacabc898cb6)
 ![image](https://github.com/user-attachments/assets/9d29f71d-4737-4594-9fe5-6feff08ff2d1)
 ```sql
+WITH cte AS(
+SELECT
+  avg(amount) as amount
+FROM salary)
+
+
+SELECT
+  e.department_id, to_char(s.payment_date, 'MM-YYYY'),
+  CASE
+    WHEN avg(e.salary) > (SELECT amount FROM cte) THEN 'higher'
+    WHEN avg(e.salary) < (SELECT amount FROM cte) THEN 'lower'
+    ELSE 'same'
+  END as comparision
+FROM employee e 
+JOIN salary s ON e.employee_id = s.employee_id
+WHERE EXTRACT(MONTH from s.payment_date) = 3 AND EXTRACT(YEAR from s.payment_date) = 2024
+GROUP BY 1,2;
 ```
+
+---
+
