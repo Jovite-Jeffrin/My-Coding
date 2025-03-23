@@ -149,6 +149,8 @@ JOIN salary s ON e.employee_id = s.employee_id
 WHERE EXTRACT(MONTH from s.payment_date) = 3 AND EXTRACT(YEAR from s.payment_date) = 2024
 GROUP BY 1,2;
 ```
+![image](https://github.com/user-attachments/assets/0939c8a3-b649-4f3e-b1ff-68e15dfeba06)
+
 
 ---
 
