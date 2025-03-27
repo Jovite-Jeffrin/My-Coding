@@ -148,3 +148,30 @@ WHERE u1.banned = 'No' AND u2.banned = 'No'
 GROUP BY 1;
 ```
 ![image](https://github.com/user-attachments/assets/68510d9f-f0c9-4fee-abad-6bf04126aa93)
+
+---
+
+### Tournament Winners [Link](https://youtu.be/IQ4n4n-Y9z8?si=5fqLVxfYGVYem7Tr)
+![image](https://github.com/user-attachments/assets/a201084c-e125-405f-b94d-b9345cdd7bbd)
+
+From the above table find the maximum scores scored by the players in each group.
+
+```sql
+with cte as (
+SELECT first_player as players, first_score as score FROM matches
+UNION all
+SELECT second_player as players, second_score as score FROM matches)
+, cte2 as(
+SELECT
+	p.group_id, c.players, sum(score) as scores,
+    RANK() OVER(PARTITION BY p.group_id ORDER BY sum(score) DESC, players asc) as rnk
+FROM cte as c
+JOIN players p ON c.players = p.player_id
+group by 1,2)
+
+SELECT
+	group_id, players, scores
+from cte2
+WHERE rnk = 1;
+```
+![image](https://github.com/user-attachments/assets/9bea51a5-d286-4405-aad0-de00e58495b3)
