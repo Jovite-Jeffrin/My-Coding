@@ -36,3 +36,43 @@ group by 1
 
 - - - -
 
+### Consecutive Empty Seats ([Problem link](https://youtu.be/F9Otofceer0?list=PLBTZqjSKn0IeKBQDjLmzisazhqQy4iGkb))
+<img width="1421" height="578" alt="image" src="https://github.com/user-attachments/assets/5cbf2a9b-f71c-456a-a188-3259f185372a" />
+
+#### Using LEAD AND LAG Function
+```sql
+SELECT * 
+from 
+  (
+  SELECT *,
+    lead(is_empty,1) over(order by seat_no) as next_1,
+    lead(is_empty,2) over(order by seat_no) as next_2,
+    LAG(is_empty,1) over(order by seat_no) as prev_1,
+    LAG(is_empty,2) over(order by seat_no) as prev_2
+  from bms
+  ) as sq 
+where (is_empty = 'Y' and next_1 = 'Y' and next_2 = 'Y')
+	or (is_empty = 'Y' and prev_1 = 'Y' and next_1 = 'Y')	
+	or (is_empty = 'Y' and prev_1 = 'Y' and prev_2 = 'Y');
+```
+<img width="1109" height="658" alt="image" src="https://github.com/user-attachments/assets/300ca7d3-8e69-4992-96c9-ca699565fef5" />
+
+<img width="1088" height="351" alt="image" src="https://github.com/user-attachments/assets/23c5b634-761b-4a88-8bd5-aac50fe9d95a" />
+
+#### Using Advance Function
+```sql
+SELECT
+	*
+from 
+  (
+    SELECT *,
+      sum(case when is_empty = 'Y' then 1 else 0 END) over(order by seat_no ROWS BETWEEN 2 PRECEDING and CURRENT ROW) as prev_2,
+      sum(case when is_empty = 'Y' then 1 else 0 END) over(order by seat_no ROWS BETWEEN 1 PRECEDING and 1 FOLLOWING) as prev_next_1,
+      sum(case when is_empty = 'Y' then 1 else 0 END) over(order by seat_no ROWS BETWEEN CURRENT row and 2 FOLLOWING) as next_2
+      from bms
+  ) as sq 
+WHERE prev_2 = 3 or prev_next_1 = 3 or next_2 = 3;
+```
+<img width="1078" height="352" alt="image" src="https://github.com/user-attachments/assets/3840b1b3-f803-467c-a0db-6f103ce278fb" />
+
+- - - -
